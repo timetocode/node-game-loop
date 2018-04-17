@@ -13,6 +13,7 @@ let previous = hrtimeMs()
 let tickLengthMs = 1000 / TICK_RATE
 
 const loop = () => {
+    setTimeout(loop, tickLengthMs)
     let now = hrtimeMs()
     let delta = (now - previous) / 1000
     console.log('delta', delta)
@@ -21,7 +22,7 @@ const loop = () => {
     tick++
 }
 
-setInterval(loop, tickLengthMs)
+loop() // starts the loop
 ```
 Delta here is in units of seconds (not milliseconds, like it was in the original). The perfect delta at this TICK_RATE would be 0.050000000000. A delta of 0.051 is off by 1 millisecond. If running this code produces satisfactory accuracy on the target machine, then it may be a superior option to the node-game-loop.
 
